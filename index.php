@@ -36,11 +36,28 @@ function currentDomain(){
 // echo currentDomain();
 
 function asset($src){
-    $domain=trim(currentDomain(),'/ ');
+    $domain=trim(DOMAIN,'/ ');
     $src=$domain.'/'.trim($src,'/');
     return $src;
 }
-echo asset("");
-echo asset("template\admin");
+// echo asset("");
+// echo asset("template\admin");
 
 //C:\xampp\htdocs\177-projectnews\template\admin
+
+function url($url){
+    $domain=trim(DOMAIN,'/ ');
+    $url=$domain.'/'.trim($url,'/');
+    return $url;
+}
+// echo url("");
+
+function methodField(){
+    return $_SERVER['REQUEST_METHOD'];
+}
+// echo methodField();
+
+function currentURL(){
+    return currentDomain().$_SERVER['REQUEST_URI'];
+}
+echo currentURL();
