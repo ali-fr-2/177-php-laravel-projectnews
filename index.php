@@ -15,10 +15,15 @@ define("DB_NAME", "projectnews");
  
 define("BASE_URL","http://localhost/177-projectnews/");
 
-// function redirect($url){
-//     header("location:".trim(BASE_URL,"/ ")."/".trim($url,"/ "));
-//     exit();
-// }
+
+require_once "./database/DataBase.php";
+$conn=new database\Database();
+// $db=$conn->getConnection();
+
+function redirect($url){
+    header("location:".trim(BASE_URL,"/ ")."/".trim($url,"/ "));
+    exit();
+}
 // redirect('main.php');
 
 function protocol(){
@@ -60,4 +65,4 @@ function methodField(){
 function currentURL(){
     return currentDomain().$_SERVER['REQUEST_URI'];
 }
-echo currentURL();
+// echo currentURL();
