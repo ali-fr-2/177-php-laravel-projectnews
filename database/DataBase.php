@@ -34,9 +34,51 @@ class Database
 
             die($e->getMessage());
         }
+        // return $this->conn;
+    }
+    function getConnection()
+    {
         return $this->conn;
     }
-    // function getConnection(){
-    //     return $this->conn;
-    // }
+    public function SelectAll($table)
+    {
+        try {
+            $tables = [
+                "users",
+                "posts",
+                "categories"
+            ];
+            if (!in_array($table, $tables)) {
+                die("Invalid Table");
+            } else {
+                $sql = "SELECT * FROM " . $table;
+                $statement = $this->conn->prepare($sql);
+                $statement->execute();
+                return $statement->fetchAll();
+            }
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
+    public function Find($table, $id)
+    {
+        try {
+            $tables = [
+                "users",
+                "posts",
+                "categories"
+            ];
+            if (!in_array($table, $tables)) {
+                die("Invalid Table");
+            } else {
+                $sql = "SELECT * FROM " . $table . " WHERE id=?";
+                $statement = $this->conn->prepare($sql);
+                $statement->execute([$id]);
+            }
+
+            return $statement->fetch();
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 }
