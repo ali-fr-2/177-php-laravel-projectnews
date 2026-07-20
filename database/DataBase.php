@@ -54,8 +54,9 @@ class Database
                 $sql = "SELECT * FROM " . $table;
                 $statement = $this->conn->prepare($sql);
                 $statement->execute();
-                return $statement->fetchAll();
             }
+            // return $statement->fetchAll();
+            return $statement;
         } catch (PDOException $e) {
             die($e->getMessage());
         }
@@ -75,13 +76,13 @@ class Database
                 $statement = $this->conn->prepare($sql);
                 $statement->execute([$id]);
             }
-
-            return $statement->fetch();
+            return $statement;
+            // return $statement->fetch();
         } catch (PDOException $e) {
             die($e->getMessage());
         }
     }
-    public function InsertInTable($table, $fields, $values)
+    public function InsertInTable($table, $fields, $data)
     {
         try {
             $tables = [
@@ -90,12 +91,14 @@ class Database
                 "categories"
             ];
             if (!in_array($table, $tables)) {
-            die("Invalid Table");
-            }else{
-                $sql="INSERT INTO ".$table
+                die("Invalid Table");
+            } else {
+                $statement = $this->conn->prepare("INSERT INTO " . $table . " (" . implode(', ', $fields) . " ,created_at) VALUES ( :" . implode(', :', $fields) . " , now())");
+                $statement->execute(array_combine($fields, $data));
+                return true;
             }
         } catch (PDOException $e) {
-            die("Invalid Table");
+            die($e->getMessage());
         }
     }
 }
