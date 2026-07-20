@@ -81,4 +81,21 @@ class Database
             die($e->getMessage());
         }
     }
+    public function InsertInTable($table, $fields, $values)
+    {
+        try {
+            $tables = [
+                "users",
+                "posts",
+                "categories"
+            ];
+            if (!in_array($table, $tables)) {
+            die("Invalid Table");
+            }else{
+                $sql="INSERT INTO ".$table
+            }
+        } catch (PDOException $e) {
+            die("Invalid Table");
+        }
+    }
 }
