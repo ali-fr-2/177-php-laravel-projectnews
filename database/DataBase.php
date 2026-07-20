@@ -101,4 +101,25 @@ class Database
             die($e->getMessage());
         }
     }
+    public function Update($table, $id, $fields, $datas)
+    {
+
+        $sql = "UPDATE " . $table . " SET ";
+        foreach (array_combine($fields, $datas) as $field => $data) {
+            if ($data) {
+                $sql .= "`" . $field . " ` = ? ,";
+            } else {
+                $sql .= "`" . $field . " ` = NULL ,";
+            }
+        }
+        $sql .= "WHERE id =? ";
+
+        try{
+            $statement=$this->conn->prepare($sql);
+            $statement->execute(array_merge(array_filter(array_values($datas)),[$id]));
+            return true;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+    }
 }
