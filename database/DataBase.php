@@ -122,4 +122,15 @@ class Database
             die($e->getMessage());
         }
     }
+    public function Delete($table,$id){
+        $sql="DELETE FROM ".$table." WHERE id=?";
+                try{
+            $statement=$this->conn->prepare($sql);
+            $statement->execute([$id]);
+            return true;
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        }
+
+    }
 }
